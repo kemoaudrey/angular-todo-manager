@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "json-server": "json-server --watch db.json --port 3000",
     "serve:ssr:angular-todo-app": "node dist/angular-todo-app/server/server.mjs"
   },
   "prettier": {
