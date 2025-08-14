@@ -1,4 +1,3 @@
-// src/app/todos/todo-list/todo-list.component.ts
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { MatDialog } from '@angular/material/dialog';
