@@ -1,4 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import '~@angular/material/prebuilt-themes/indigo-pink.css';
+/* Material Icons */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+.ng2-smart-table {
+  font-family: inherit;
+}
+
+.ng2-smart-table th {
+  background-color: #f8fafc;
+  font-weight: 600;
+  color: #374151;
+  padding: 12px 8px;
+}
+
+.ng2-smart-table td {
+  padding: 12px 8px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.ng2-smart-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+.ng2-smart-table .ng2-smart-action {
+  display: inline-block;
+  margin: 0 2px;
+}
+
+.ng2-smart-table .ng2-smart-action a {
+  text-decoration: none;
+}
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
