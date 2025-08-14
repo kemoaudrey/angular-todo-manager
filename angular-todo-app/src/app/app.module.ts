@@ -36,7 +36,7 @@ import { PersonsModule } from './persons/persons.module';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    
+
     // Angular Material Modules
     MatTableModule,
     MatPaginatorModule,
@@ -52,7 +52,7 @@ import { PersonsModule } from './persons/persons.module';
     MatAutocompleteModule,
     MatChipsModule,
     MatCheckboxModule,
-    
+
     // Feature Modules
     TodosModule,
     PersonsModule
