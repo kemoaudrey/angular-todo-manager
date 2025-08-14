@@ -20,18 +20,18 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { TodosModule } from './todos/todos.module';
-import { PersonsModule } from './persons/persons.module';
+// import { AppRoutingModule } from './app-routing.module';
+// import { AppComponent } from './app.component';
+import { TodosModule } from './todos/todos-module';
+import { PersonsModule } from './persons/persons-module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    // AppComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    // AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
@@ -58,6 +58,6 @@ import { PersonsModule } from './persons/persons.module';
     PersonsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  // bootstrap: [AppComponent]
 })
 export class AppModule { }

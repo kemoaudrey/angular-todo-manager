@@ -3,6 +3,8 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
