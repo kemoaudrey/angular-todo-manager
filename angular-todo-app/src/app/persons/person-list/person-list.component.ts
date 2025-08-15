@@ -6,7 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Person } from '../../models/person.model';
 import { PersonService } from '../../services/person.service';
 import { PersonModalComponent } from '../person-modal/person-modal.component';
-
+import { ExportService } from '../../services/export.service';
 @Component({
   selector: 'app-person-list',
   template: `
