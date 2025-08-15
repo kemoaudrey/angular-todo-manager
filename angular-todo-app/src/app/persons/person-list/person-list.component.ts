@@ -115,7 +115,8 @@ export class PersonListComponent implements OnInit {
 
   constructor(
     private personService: PersonService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private exportService: ExportService
   ) {}
 
   ngOnInit(): void {
@@ -125,6 +126,18 @@ export class PersonListComponent implements OnInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
+
+  exportPersonsToExcel(): void {
+  this.personService.getPersons().subscribe(persons => {
+    this.exportService.exportPersonsToExcel(persons, `persons_${new Date().toISOString().split('T')[0]}`);
+  });
+}
+
+exportPersonsToPDF(): void {
+  this.personService.getPersons().subscribe(persons => {
+    this.exportService.exportPersonsToPDF(persons, `persons_${new Date().toISOString().split('T')[0]}`);
+  });
+}
 
   loadPersons(): void {
     this.personService.getPersons().subscribe(persons => {

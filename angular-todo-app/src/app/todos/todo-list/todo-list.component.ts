@@ -5,22 +5,44 @@ import { Todo } from '../../models/todo.model';
 import { Priority, Label } from '../../models/enums';
 import { TodoService } from '../../services/todo.service';
 import { TodoModalComponent } from '../todo-modal/todo-modal.component';
-
+import { ExportService } from '../../services/export.service';
 @Component({
   selector: 'app-todo-list',
   template: `
     <div class="container mx-auto p-6">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Todo Management</h2>
-        <button
-          mat-raised-button
-          color="primary"
-          (click)="openTodoModal()"
-          class="bg-blue-500 hover:bg-blue-600">
-          <mat-icon>add</mat-icon>
-          Add New Task
-        </button>
-      </div>
+        <h2 class="text-2xl font-bold text-gray-800" *transloco="'todo.title'">Todo Management</h2>
+        <div class="flex gap-3 items-center">
+        <app-language-switcher></app-language-switcher>
+
+         <button
+      mat-stroked-button
+      color="accent"
+      (click)="exportToExcel()"
+      class="text-green-600 border-green-600">
+      <mat-icon>download</mat-icon>
+      <span *transloco="'common.exportExcel'">Export to Excel</span>
+    </button>
+
+    <button
+      mat-stroked-button
+      color="accent"
+      (click)="exportToPDF()"
+      class="text-red-600 border-red-600">
+      <mat-icon>picture_as_pdf</mat-icon>
+      <span *transloco="'common.exportPDF'">Export to PDF</span>
+    </button>
+
+         <button
+      mat-raised-button
+      color="primary"
+      (click)="openTodoModal()"
+      class="bg-blue-500 hover:bg-blue-600">
+      <mat-icon>add</mat-icon>
+      <span *transloco="'todo.addNew'">Add New Task</span>
+    </button>
+  </div>
+</div>
 
       <!-- Filters Panel -->
       <div class="bg-white p-4 rounded-lg shadow-md mb-6">
@@ -107,6 +129,40 @@ export class TodoListComponent implements OnInit {
   selectedLabel: string = '';
   priorities = Object.values(Priority);
   labels = Object.values(Label);
+
+  exportToExcel(): void {
+  this.todoService.getTodos().subscribe(todos => {
+    // Apply current filters to export data
+    let filteredTodos = todos;
+
+    if (this.selectedPriority) {
+      filteredTodos = filteredTodos.filter(todo => todo.priority === this.selectedPriority);
+    }
+
+    if (this.selectedLabel) {
+      filteredTodos = filteredTodos.filter(todo => todo.labels.includes(this.selectedLabel as any));
+    }
+
+    this.exportService.exportTodosToExcel(filteredTodos, `todos_${new Date().toISOString().split('T')[0]}`);
+  });
+}
+
+exportToPDF(): void {
+  this.todoService.getTodos().subscribe(todos => {
+    // Apply current filters to export data
+    let filteredTodos = todos;
+
+    if (this.selectedPriority) {
+      filteredTodos = filteredTodos.filter(todo => todo.priority === this.selectedPriority);
+    }
+
+    if (this.selectedLabel) {
+      filteredTodos = filteredTodos.filter(todo => todo.labels.includes(this.selectedLabel as any));
+    }
+
+    this.exportService.exportTodosToPDF(filteredTodos, `todos_${new Date().toISOString().split('T')[0]}`);
+  });
+}
 
   settings = {
     mode: 'external',
@@ -201,7 +257,8 @@ export class TodoListComponent implements OnInit {
 
   constructor(
     private todoService: TodoService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private exportService: ExportService
   ) {}
 
   ngOnInit(): void {

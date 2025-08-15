@@ -1,0 +1,48 @@
+{
+  "navigation": {
+    "title": "Système de Gestion des Tâches",
+    "tasks": "Tâches",
+    "people": "Personnes"
+  },
+  "todo": {
+    "title": "Gestion des Tâches",
+    "addNew": "Ajouter une Nouvelle Tâche",
+    "editTask": "Modifier la Tâche",
+    "addTask": "Ajouter une Nouvelle Tâche",
+    "taskTitle": "Titre de la Tâche",
+    "assignTo": "Assigner à la Personne",
+    "startDate": "Date de Début",
+    "endDate": "Date de Fin",
+    "priority": "Priorité",
+    "labels": "Étiquettes",
+    "description": "Description",
+    "completed": "Marquer comme terminé",
+    "save": "Sauvegarder",
+    "update": "Mettre à jour",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "search": "Rechercher des tâches",
+    "allPriorities": "Toutes les Priorités",
+    "allLabels": "Toutes les Étiquettes",
+    "clearFilters": "Effacer Tous les Filtres"
+  },
+  "person": {
+    "title": "Gestion des Personnes",
+    "addNew": "Ajouter une Nouvelle Personne",
+    "editPerson": "Modifier la Personne",
+    "addPerson": "Ajouter une Nouvelle Personne",
+    "name": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "searchName": "Rechercher par Nom",
+    "searchEmail": "Rechercher par Email"
+  },
+  "common": {
+    "actions": "Actions",
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "saving": "Sauvegarde...",
+    "exportExcel": "Exporter vers Excel",
+    "exportPDF": "Exporter vers PDF"
+  }
+}
