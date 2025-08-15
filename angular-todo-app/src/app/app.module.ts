@@ -23,8 +23,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TodosModule } from './todos/todos.module';
-import { PersonsModule } from './persons/persons.module';
+import { TodosModule } from './todos/todos-module';
+import { PersonsModule } from './persons/persons-module';
 
 @NgModule({
   declarations: [
