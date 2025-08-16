@@ -1,0 +1,84 @@
+<div class="container mx-auto p-6">
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800" *transloco="'todo.title'">Todo Management</h2>
+    <div class="flex gap-3 items-center">
+      <app-language-switcher></app-language-switcher>
+
+      <button
+        mat-stroked-button
+        color="accent"
+        (click)="exportToExcel()"
+        class="text-green-600 border-green-600">
+        <mat-icon>download</mat-icon>
+        <span *transloco="'common.exportExcel'">Export to Excel</span>
+      </button>
+
+      <button
+        mat-stroked-button
+        color="accent"
+        (click)="exportToPDF()"
+        class="text-red-600 border-red-600">
+        <mat-icon>picture_as_pdf</mat-icon>
+        <span *transloco="'common.exportPDF'">Export to PDF</span>
+      </button>
+
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="openTodoModal()"
+        class="bg-blue-500 hover:bg-blue-600">
+        <mat-icon>add</mat-icon>
+        <span *transloco="'todo.addNew'">Add New Task</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Filters Panel -->
+  <div class="bg-white p-4 rounded-lg shadow-md mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <mat-form-field class="w-full">
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyGlobalFilter($event)" placeholder="Search tasks">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Priority</mat-label>
+        <mat-select [(value)]="selectedPriority" (selectionChange)="filterByPriority()">
+          <mat-option value="">All Priorities</mat-option>
+          <mat-option *ngFor="let priority of priorities" [value]="priority">
+            {{priority}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Label</mat-label>
+        <mat-select [(value)]="selectedLabel" (selectionChange)="filterByLabel()">
+          <mat-option value="">All Labels</mat-option>
+          <mat-option *ngFor="let label of labels" [value]="label">
+            {{label}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button
+        mat-button
+        (click)="clearAllFilters()"
+        class="h-fit mt-4 md:mt-0">
+        Clear All Filters
+      </button>
+    </div>
+  </div>
+
+  <!-- Smart Table -->
+  <div class="bg-white rounded-lg shadow-md overflow-hidden">
+    <angular2-smart-table
+      [settings]="settings"
+      [source]="source"
+      (userRowSelect)="onRowSelect($event)"
+      (deleteConfirm)="onDeleteConfirm($event)"
+      class="w-full">
+    </angular2-smart-table>
+  </div>
+</div>

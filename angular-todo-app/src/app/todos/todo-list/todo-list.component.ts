@@ -1,127 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TranslocoModule } from '@jsverse/transloco';
+import { Settings } from 'angular2-smart-table';
 import { Todo } from '../../models/todo.model';
 import { Priority, Label } from '../../models/enums';
 import { TodoService } from '../../services/todo.service';
 import { TodoModalComponent } from '../todo-modal/todo-modal.component';
 import { ExportService } from '../../services/export.service';
+import { LocalDataSource } from 'angular2-smart-table';
+import { LanguageSwitcherComponent } from '../../shared/language-switcher/language-switcher.component';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
+
 @Component({
   selector: 'app-todo-list',
-  template: `
-    <div class="container mx-auto p-6">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800" *transloco="'todo.title'">Todo Management</h2>
-        <div class="flex gap-3 items-center">
-        <app-language-switcher></app-language-switcher>
+  standalone: true,
+  imports: [
+    CommonModule,
+    TranslocoModule,
+    LanguageSwitcherComponent,
+    Angular2SmartTableModule,
 
-         <button
-      mat-stroked-button
-      color="accent"
-      (click)="exportToExcel()"
-      class="text-green-600 border-green-600">
-      <mat-icon>download</mat-icon>
-      <span *transloco="'common.exportExcel'">Export to Excel</span>
-    </button>
-
-    <button
-      mat-stroked-button
-      color="accent"
-      (click)="exportToPDF()"
-      class="text-red-600 border-red-600">
-      <mat-icon>picture_as_pdf</mat-icon>
-      <span *transloco="'common.exportPDF'">Export to PDF</span>
-    </button>
-
-         <button
-      mat-raised-button
-      color="primary"
-      (click)="openTodoModal()"
-      class="bg-blue-500 hover:bg-blue-600">
-      <mat-icon>add</mat-icon>
-      <span *transloco="'todo.addNew'">Add New Task</span>
-    </button>
-  </div>
-</div>
-
-      <!-- Filters Panel -->
-      <div class="bg-white p-4 rounded-lg shadow-md mb-6">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <mat-form-field class="w-full">
-            <mat-label>Search</mat-label>
-            <input matInput (keyup)="applyGlobalFilter($event)" placeholder="Search tasks">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-
-          <mat-form-field class="w-full">
-            <mat-label>Priority</mat-label>
-            <mat-select [(value)]="selectedPriority" (selectionChange)="filterByPriority()">
-              <mat-option value="">All Priorities</mat-option>
-              <mat-option *ngFor="let priority of priorities" [value]="priority">
-                {{priority}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <mat-form-field class="w-full">
-            <mat-label>Label</mat-label>
-            <mat-select [(value)]="selectedLabel" (selectionChange)="filterByLabel()">
-              <mat-option value="">All Labels</mat-option>
-              <mat-option *ngFor="let label of labels" [value]="label">
-                {{label}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-
-          <button
-            mat-button
-            (click)="clearAllFilters()"
-            class="h-fit mt-4 md:mt-0">
-            Clear All Filters
-          </button>
-        </div>
-      </div>
-
-      <!-- Smart Table -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <ng2-smart-table
-          [settings]="settings"
-          [source]="source"
-          (userRowSelect)="onRowSelect($event)"
-          (deleteConfirm)="onDeleteConfirm($event)"
-          class="w-full">
-        </ng2-smart-table>
-      </div>
-    </div>
-  `,
-  styles: [`
-    .container {
-      max-width: 1400px;
-    }
-
-    ::ng-deep .ng2-smart-table {
-      font-family: inherit;
-    }
-
-    ::ng-deep .ng2-smart-table th {
-      background-color: #f8fafc;
-      font-weight: 600;
-      color: #374151;
-    }
-
-    ::ng-deep .ng2-smart-table td {
-      padding: 12px 8px;
-    }
-
-    ::ng-deep .ng2-smart-table .ng2-smart-action {
-      display: inline-block;
-      margin: 0 2px;
-    }
-
-    ::ng-deep .ng2-smart-table tbody tr:hover {
-      background-color: #f9fafb;
-    }
-  `]
+    // Material modules
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTooltipModule
+  ],
+  templateUrl: './todo-list.component.html',
+  styleUrls: ['./todo-list.component.scss']
 })
 export class TodoListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
@@ -131,71 +46,79 @@ export class TodoListComponent implements OnInit {
   labels = Object.values(Label);
 
   exportToExcel(): void {
-  this.todoService.getTodos().subscribe(todos => {
-    // Apply current filters to export data
-    let filteredTodos = todos;
+    this.todoService.getTodos().subscribe(todos => {
+      let filteredTodos = todos;
 
-    if (this.selectedPriority) {
-      filteredTodos = filteredTodos.filter(todo => todo.priority === this.selectedPriority);
-    }
+      if (this.selectedPriority) {
+        filteredTodos = filteredTodos.filter(todo => todo.priority === this.selectedPriority);
+      }
 
-    if (this.selectedLabel) {
-      filteredTodos = filteredTodos.filter(todo => todo.labels.includes(this.selectedLabel as any));
-    }
+      if (this.selectedLabel) {
+        filteredTodos = filteredTodos.filter(todo => todo.labels.includes(this.selectedLabel as any));
+      }
 
-    this.exportService.exportTodosToExcel(filteredTodos, `todos_${new Date().toISOString().split('T')[0]}`);
-  });
-}
+      this.exportService.exportTodosToExcel(filteredTodos, `todos_${new Date().toISOString().split('T')[0]}`);
+    });
+  }
 
-exportToPDF(): void {
-  this.todoService.getTodos().subscribe(todos => {
-    // Apply current filters to export data
-    let filteredTodos = todos;
+  exportToPDF(): void {
+    this.todoService.getTodos().subscribe(todos => {
+      let filteredTodos = todos;
 
-    if (this.selectedPriority) {
-      filteredTodos = filteredTodos.filter(todo => todo.priority === this.selectedPriority);
-    }
+      if (this.selectedPriority) {
+        filteredTodos = filteredTodos.filter(todo => todo.priority === this.selectedPriority);
+      }
 
-    if (this.selectedLabel) {
-      filteredTodos = filteredTodos.filter(todo => todo.labels.includes(this.selectedLabel as any));
-    }
+      if (this.selectedLabel) {
+        filteredTodos = filteredTodos.filter(todo => todo.labels.includes(this.selectedLabel as any));
+      }
 
-    this.exportService.exportTodosToPDF(filteredTodos, `todos_${new Date().toISOString().split('T')[0]}`);
-  });
-}
+      this.exportService.exportTodosToPDF(filteredTodos, `todos_${new Date().toISOString().split('T')[0]}`);
+    });
+  }
 
-  settings = {
-    mode: 'external',
-    actions: {
-      add: false,
-      position: 'right'
-    },
-    edit: {
-      editButtonContent: '<i class="material-icons text-blue-500">edit</i>',
-      saveButtonContent: '<i class="material-icons text-green-500">check</i>',
-      cancelButtonContent: '<i class="material-icons text-red-500">close</i>',
-    },
+settings: Settings = {
+  mode: 'external',
+  actions: {
+    add: false, // You have your own add button
+    edit: true,
+    delete: true,
+    position: 'right',
+    columnTitle: 'Actions' // Optional column title for actions
+  },
+  edit: {
+    editButtonContent: '<i class="material-icons">edit</i>',
+    saveButtonContent: '<i class="material-icons">check</i>',
+    cancelButtonContent: '<i class="material-icons">clear</i>',
+    confirmSave: true
+  },
     delete: {
       deleteButtonContent: '<i class="material-icons text-red-500">delete</i>',
       confirmDelete: true
     },
     columns: {
-      titre: {
-        title: 'Title',
-        type: 'string',
-        width: '20%'
-      },
+    titre: {
+      title: 'Title',
+      type: 'text',
+      width: '20%',
+       filter: {
+        type: 'text' // Changed from boolean to filter configuration
+      }
+    },
       personName: {
         title: 'Assigned To',
-        type: 'string',
+        type: 'text',
         width: '15%',
-        valuePrepareFunction: (value: any, row: Todo) => {
-          return row.person.name;
-        }
+     valuePrepareFunction: (cell: any, row: any) => { // Changed parameter names
+        return row.data.person?.name || ''; // Access data through row.data
       },
+      filter: {
+        type: 'text'
+      }
+    },
       startDate: {
         title: 'Start Date',
-        type: 'string',
+        type: 'text',
         width: '12%',
         valuePrepareFunction: (value: Date) => {
           return new Date(value).toLocaleDateString();
@@ -203,7 +126,7 @@ exportToPDF(): void {
       },
       endDate: {
         title: 'End Date',
-        type: 'string',
+        type: 'text',
         width: '12%',
         valuePrepareFunction: (value: Date | null) => {
           return value ? new Date(value).toLocaleDateString() : 'Not completed';
@@ -299,47 +222,25 @@ exportToPDF(): void {
     });
   }
 
-  applyGlobalFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.source.setFilter([
-      {
-        field: 'titre',
-        search: filterValue
-      },
-      {
-        field: 'description',
-        search: filterValue
-      }
-    ], false);
-  }
+applyGlobalFilter(event: Event): void {
+  const filterValue = (event.target as HTMLInputElement).value;
+  this.source.setFilter([
+    { field: 'titre', search: filterValue },
+    { field: 'description', search: filterValue }
+  ], false); // Added third parameter
+}
 
-  filterByPriority(): void {
-    if (this.selectedPriority) {
-      this.source.setFilter({
-        field: 'priority',
-        search: this.selectedPriority
-      });
-    } else {
-      this.source.setFilter({
-        field: 'priority',
-        search: ''
-      });
-    }
-  }
+filterByPriority(): void {
+  this.source.setFilter([
+    { field: 'priority', search: this.selectedPriority }
+  ], false);
+}
 
-  filterByLabel(): void {
-    if (this.selectedLabel) {
-      this.source.setFilter({
-        field: 'labels',
-        search: this.selectedLabel
-      });
-    } else {
-      this.source.setFilter({
-        field: 'labels',
-        search: ''
-      });
-    }
-  }
+filterByLabel(): void {
+  this.source.setFilter([
+    { field: 'labels', search: this.selectedLabel }
+  ], false);
+}
 
   clearAllFilters(): void {
     this.selectedPriority = '';

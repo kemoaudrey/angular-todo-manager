@@ -1,0 +1,26 @@
+.container {
+  max-width: 1400px;
+}
+
+::ng-deep angular2-smart-table {
+  font-family: inherit;
+
+  th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #374151;
+  }
+
+  td {
+    padding: 12px 8px;
+  }
+
+  .angular2-smart-action {
+    display: inline-block;
+    margin: 0 2px;
+  }
+
+  tbody tr:hover {
+    background-color: #f9fafb;
+  }
+}

@@ -18,12 +18,11 @@ import { PersonListComponent } from './person-list/person-list.component';
 import { PersonModalComponent } from './person-modal/person-modal.component';
 
 @NgModule({
-  declarations: [
-    PersonListComponent,
-    PersonModalComponent
-  ],
+
   imports: [
     CommonModule,
+    PersonListComponent,
+    PersonModalComponent,
     PersonsRoutingModule,
     ReactiveFormsModule,
     FormsModule,

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
+import { AppComponent } from './app.component';
 // Angular Material
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -20,17 +20,15 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-
+import { Angular2SmartTableModule } from 'angular2-smart-table';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { TodosModule } from './todos/todos-module';
 import { PersonsModule } from './persons/persons-module';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
   imports: [
+      AppComponent,
+    Angular2SmartTableModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -55,10 +53,10 @@ import { PersonsModule } from './persons/persons-module';
     MatCheckboxModule,
 
     // Feature Modules
-    TodosModule,
+     TodosModule,
     PersonsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  // bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { Angular2SmartTableModule } from 'angular2-smart-table';
+import { TranslocoModule } from '@jsverse/transloco';
 
 // Angular Material
 import { MatTableModule } from '@angular/material/table';
@@ -21,18 +22,21 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { TodosRoutingModule } from './todos-routing-module';
 import { TodoListComponent } from './todo-list/todo-list.component';
 import { TodoModalComponent } from './todo-modal/todo-modal.component';
-
+import { LanguageSwitcherComponent } from '../shared/language-switcher/language-switcher.component';
 @NgModule({
-  declarations: [
-    TodoListComponent,
-    TodoModalComponent
-  ],
+  declarations: [],
   imports: [
+
+    LanguageSwitcherComponent,
+    TodoListComponent,
+    TodoModalComponent,
     CommonModule,
     TodosRoutingModule,
+
     ReactiveFormsModule,
     FormsModule,
-    Ng2SmartTableModule,
+    Angular2SmartTableModule,
+    TranslocoModule,
 
     // Angular Material
     MatTableModule,
