@@ -1,98 +1,29 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule } from '@angular/forms';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { Person } from '../../models/person.model';
 import { PersonService } from '../../services/person.service';
 
 @Component({
   selector: 'app-person-modal',
-  template: `
-    <div class="p-6">
-      <h2 mat-dialog-title class="text-2xl font-bold mb-4">
-        {{ isEditMode ? 'Edit Person' : 'Add New Person' }}
-      </h2>
-
-      <form [formGroup]="personForm" (ngSubmit)="onSubmit()">
-        <div class="space-y-4">
-
-          <!-- Name Field -->
-          <mat-form-field class="w-full">
-            <mat-label>Name</mat-label>
-            <input matInput formControlName="name" placeholder="Enter full name">
-            <mat-error *ngIf="personForm.get('name')?.hasError('required')">
-              Name is required
-            </mat-error>
-            <mat-error *ngIf="personForm.get('name')?.hasError('minlength')">
-              Name must be at least 3 characters long
-            </mat-error>
-            <mat-error *ngIf="personForm.get('name')?.hasError('nameNotUnique')">
-              This name is already taken
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Email Field -->
-          <mat-form-field class="w-full">
-            <mat-label>Email</mat-label>
-            <input matInput formControlName="email" placeholder="Enter email address">
-            <mat-error *ngIf="personForm.get('email')?.hasError('required')">
-              Email is required
-            </mat-error>
-            <mat-error *ngIf="personForm.get('email')?.hasError('email')">
-              Please enter a valid email address
-            </mat-error>
-          </mat-form-field>
-
-          <!-- Phone Field -->
-          <mat-form-field class="w-full">
-            <mat-label>Phone</mat-label>
-            <input matInput formControlName="phone" placeholder="Enter phone number">
-            <mat-error *ngIf="personForm.get('phone')?.hasError('required')">
-              Phone is required
-            </mat-error>
-          </mat-form-field>
-
-        </div>
-
-        <div mat-dialog-actions class="flex justify-end gap-3 mt-6 p-0">
-          <button
-            type="button"
-            mat-button
-            (click)="onCancel()"
-            class="text-gray-600">
-            Cancel
-          </button>
-          <button
-            type="submit"
-            mat-raised-button
-            color="primary"
-            [disabled]="personForm.invalid || isSubmitting"
-            class="bg-blue-500 hover:bg-blue-600">
-            <span *ngIf="isSubmitting" class="inline-flex items-center">
-              <mat-icon class="animate-spin mr-2">refresh</mat-icon>
-              Saving...
-            </span>
-            <span *ngIf="!isSubmitting">
-              {{ isEditMode ? 'Update' : 'Save' }}
-            </span>
-          </button>
-        </div>
-      </form>
-    </div>
-  `,
-  styles: [`
-    .space-y-4 > * + * {
-      margin-top: 1rem;
-    }
-
-    .animate-spin {
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-  `]
+  standalone: true,
+  imports: [
+    // Angular Material Modules
+CommonModule,
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule
+  ],
+  templateUrl: './person-modal.component.html',
+  styleUrls: ['./person-modal.component.scss']
 })
 export class PersonModalComponent implements OnInit {
   personForm!: FormGroup;

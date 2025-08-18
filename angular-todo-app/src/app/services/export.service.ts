@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import autoTable from 'jspdf-autotable';
 import { Todo } from '../models/todo.model';
 import { Person } from '../models/person.model';
+
+// Extend jsPDF interface to include autoTable
+declare module 'jspdf' {
+  interface jsPDF {
+    autoTable: (options: any) => jsPDF;
+  }
+}
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +62,7 @@ export class ExportService {
     ]);
 
     // Add table
-    (doc as any).autoTable({
+    autoTable(doc,{
       head: [headers],
       body: data,
       startY: 40,
@@ -104,7 +111,7 @@ export class ExportService {
       person.phone
     ]);
 
-    (doc as any).autoTable({
+    autoTable(doc,{
       head: [headers],
       body: data,
       startY: 40,

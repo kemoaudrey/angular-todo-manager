@@ -1,19 +1,19 @@
 {
   "persons": [
     {
-      "id": 1,
+      "id": "1",
       "name": "John Doe",
       "email": "john.doe@example.com",
       "phone": "123-456-7890"
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Jane Smith",
       "email": "jane.smith@example.com",
       "phone": "098-765-4321"
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Bob Johnson",
       "email": "bob.johnson@example.com",
       "phone": "555-123-4567"
@@ -21,7 +21,6 @@
   ],
   "todos": [
     {
-      "id": 1,
       "titre": "Check the documents of audit",
       "person": {
         "id": 1,
@@ -30,14 +29,18 @@
         "phone": "123-456-7890"
       },
       "startDate": "2024-04-15T00:00:00.000Z",
-      "endDate": null,
+      "endDate": "2025-08-18T22:21:56.619Z",
       "priority": "Moyen",
-      "labels": ["HTML", "CSS"],
+      "labels": [
+        "HTML",
+        "CSS"
+      ],
       "description": "Review and verify all audit documentation",
-      "completed": false
+      "completed": true,
+      "id": "1"
     },
     {
-      "id": 2,
+      "id": "2",
       "titre": "Arrange a trip for best performing staff members",
       "person": {
         "id": 2,
@@ -48,8 +51,23 @@
       "startDate": "2024-04-01T00:00:00.000Z",
       "endDate": null,
       "priority": "Facile",
-      "labels": ["NODE JS"],
+      "labels": [
+        "NODE JS"
+      ],
       "description": "Plan and organize reward trip for top performers",
+      "completed": false
+    },
+    {
+      "id": "8e4c",
+      "titre": "to do",
+      "person": "audrey",
+      "startDate": "2025-08-18T23:00:00.000Z",
+      "endDate": "2025-08-18T23:00:00.000Z",
+      "priority": "Moyen",
+      "labels": [
+        "CSS"
+      ],
+      "description": "must be done",
       "completed": false
     }
   ]

@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { MatDialogModule,MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, map, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Todo } from '../../models/todo.model';
@@ -27,6 +27,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
 
     // Angular Material Modules
+    MatDialogModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,

@@ -11,25 +11,30 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular/build:application",
+            "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "browser": "src/main.ts",
-            "tsConfig": "tsconfig.app.json",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "public"
-              }
-            ],
+            "outputPath": "dist/browser",
+      "index": "src/index.html",
+      "main": "src/main.ts",
+      "tsConfig": "tsconfig.app.json",
+      "allowedCommonJsDependencies": [
+  "canvg",
+  "jspdf",
+  "html2canvas",
+  "raf",
+  "rgbcolor",
+  "core-js"
+],
+
+          "assets": [
+        "src/favicon.ico",
+        "src/assets"
+      ],
             "styles": [
-              "src/custom-theme.scss",
+              "src/tailwind.css",
               "src/styles.css"
             ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
-            "ssr": {
-              "entry": "src/server.ts"
-            }
+           "scripts": []
           },
           "configurations": {
             "production": {
@@ -56,7 +61,8 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular/build:dev-server",
+          "builder": "@angular-devkit/build-angular:dev-server",
+
           "configurations": {
             "production": {
               "buildTarget": "angular-todo-app:build:production"
@@ -92,3 +98,4 @@
     "analytics": "d448a714-8b29-4b69-9bab-09cb0921e017"
   }
 }
+

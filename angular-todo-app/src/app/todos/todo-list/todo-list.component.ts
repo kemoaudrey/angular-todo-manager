@@ -106,16 +106,14 @@ settings: Settings = {
       }
     },
       personName: {
-        title: 'Assigned To',
-        type: 'text',
-        width: '15%',
-     valuePrepareFunction: (cell: any, row: any) => { // Changed parameter names
-        return row.data.person?.name || ''; // Access data through row.data
-      },
-      filter: {
-        type: 'text'
-      }
-    },
+  title: 'Assigned To',
+  type: 'text',
+  width: '15%',
+  valuePrepareFunction: (cell: any, row: any) => {
+    return row.person?.name || ''; // ✅ row est ton Todo
+  },
+  filter: { type: 'text' }
+},
       startDate: {
         title: 'Start Date',
         type: 'text',

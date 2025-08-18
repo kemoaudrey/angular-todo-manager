@@ -5,7 +5,9 @@ import {
   TranslocoLoader,
   TRANSLOCO_CONFIG,
   translocoConfig,
-  TranslocoModule
+  TranslocoModule,
+  TRANSLOCO_TRANSPILER,
+  DefaultTranspiler
 } from '@jsverse/transloco';
 import { Injectable, NgModule } from '@angular/core';
 
@@ -31,7 +33,11 @@ export class TranslocoHttpLoader implements TranslocoLoader {
         prodMode: false,
       })
     },
-    { provide: TRANSLOCO_LOADER, useClass: TranslocoHttpLoader }
+    { provide: TRANSLOCO_LOADER, useClass: TranslocoHttpLoader },
+
+
+    { provide: TRANSLOCO_TRANSPILER, useClass: DefaultTranspiler }
   ]
 })
 export class TranslocoRootModule {}
+
