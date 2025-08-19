@@ -39,10 +39,12 @@
   },
   "common": {
     "actions": "Actions",
+    "status": "Statue",
     "edit": "Modifier",
     "delete": "Supprimer",
     "saving": "Sauvegarde...",
     "exportExcel": "Exporter vers Excel",
-    "exportPDF": "Exporter vers PDF"
+    "exportPDF": "Exporter vers PDF",
+    "language": "Langue"
   }
 }

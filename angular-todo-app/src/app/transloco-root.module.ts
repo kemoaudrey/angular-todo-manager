@@ -1,43 +1,42 @@
 import { HttpClient } from '@angular/common/http';
 import {
-  TRANSLOCO_LOADER,
+  provideTransloco,
   Translation,
   TranslocoLoader,
-  TRANSLOCO_CONFIG,
-  translocoConfig,
+  TRANSLOCO_MISSING_HANDLER,
   TranslocoModule,
-  TRANSLOCO_TRANSPILER,
-  DefaultTranspiler
 } from '@jsverse/transloco';
+import { Observable } from 'rxjs';
 import { Injectable, NgModule } from '@angular/core';
-
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
   constructor(private http: HttpClient) {}
-
-  getTranslation(lang: string) {
-    return this.http.get<Translation>(`/assets/i18n/${lang}.json`);
+  getTranslation(lang: string): Observable<any> {
+    return this.http.get(`/assets/i18n/${lang}.json`);
   }
 }
 
 @NgModule({
-  exports: [ TranslocoModule ],
+  exports: [TranslocoModule],
   providers: [
-    {
-      provide: TRANSLOCO_CONFIG,
-      useValue: translocoConfig({
+       provideTransloco({
+      config: {
         availableLangs: ['en', 'fr'],
         defaultLang: 'en',
-        fallbackLang: 'en',
         reRenderOnLangChange: true,
-        prodMode: false,
-      })
+        fallbackLang: 'en',
+        prodMode: true,
+      },
+      loader: TranslocoHttpLoader,
+    }),
+
+    {
+      provide: TRANSLOCO_MISSING_HANDLER,
+      useValue: {
+        handle: (key: string) => `Missing: ${key}`,
+      },
     },
-    { provide: TRANSLOCO_LOADER, useClass: TranslocoHttpLoader },
 
-
-    { provide: TRANSLOCO_TRANSPILER, useClass: DefaultTranspiler }
   ]
 })
 export class TranslocoRootModule {}
-

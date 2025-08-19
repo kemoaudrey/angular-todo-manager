@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { TranslocoModule } from '@jsverse/transloco';
+import { TranslocoModule, TranslocoService } from '@jsverse/transloco';
 import { Settings } from 'angular2-smart-table';
 import { Todo } from '../../models/todo.model';
 import { Priority, Label } from '../../models/enums';
@@ -44,6 +44,43 @@ export class TodoListComponent implements OnInit {
   selectedLabel: string = '';
   priorities = Object.values(Priority);
   labels = Object.values(Label);
+
+  private updateTableSettings(): void {
+  this.settings = {
+    ...this.settings,
+    columns: {
+      ...this.settings.columns,
+      titre: {
+        ...this.settings.columns['titre'],
+        title: this.translocoService.translate('todo.taskTitle')
+      },
+      personName: {
+        ...this.settings.columns['personName'],
+        title: this.translocoService.translate('todo.assignTo')
+      },
+      startDate: {
+        ...this.settings.columns['startDate'],
+        title: this.translocoService.translate('todo.startDate')
+      },
+      endDate: {
+        ...this.settings.columns['endDate'],
+        title: this.translocoService.translate('todo.endDate')
+      },
+      priority: {
+        ...this.settings.columns['priority'],
+        title: this.translocoService.translate('todo.priority')
+      },
+      labels: {
+        ...this.settings.columns['labels'],
+        title: this.translocoService.translate('todo.labels')
+      },
+      completed: {
+        ...this.settings.columns['completed'],
+        title: this.translocoService.translate('common.status')
+      }
+    }
+  };
+}
 
   exportToExcel(): void {
     this.todoService.getTodos().subscribe(todos => {
@@ -179,12 +216,19 @@ settings: Settings = {
   constructor(
     private todoService: TodoService,
     private dialog: MatDialog,
-    private exportService: ExportService
+    private exportService: ExportService,
+    private translocoService: TranslocoService
   ) {}
 
-  ngOnInit(): void {
-    this.loadTodos();
-  }
+ ngOnInit(): void {
+  this.loadTodos();
+  this.updateTableSettings();
+
+
+  this.translocoService.langChanges$.subscribe(() => {
+    this.updateTableSettings();
+  });
+}
 
   loadTodos(): void {
     this.todoService.getTodos().subscribe(todos => {
